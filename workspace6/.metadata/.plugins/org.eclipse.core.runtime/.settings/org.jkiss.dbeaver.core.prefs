@@ -1,0 +1,8 @@
+SQLEditor.autoSaveOnChange=true
+SQLEditor.autoSaveOnClose=true
+SQLEditor.autoSaveOnExecute=true
+driver.selector.orderBy=score
+eclipse.preferences.version=1
+tipOfTheDayInitializer.notFirstRun=true
+ui.auto.update.check.time=1629137410352
+ui.show.tip.of.the.day.on.startup=true

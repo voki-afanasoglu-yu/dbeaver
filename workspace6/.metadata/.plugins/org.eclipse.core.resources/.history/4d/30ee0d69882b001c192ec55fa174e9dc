@@ -1,0 +1,59 @@
+create table vokigames.dau_karl_bedroom as
+select 
+	(timestamp 'epoch' + day * interval '1 second')::date report_date,
+	'ios' as platform,
+	count (distinct event_user) as DAU,
+	count (distinct 
+	case
+	when timestamp 'epoch' + (first_session/1000)::float * interval '1 second' > '2021-04-26' then event_user
+	end
+	) as DAU_new
+from
+	vokigames.attempts_30975_pq
+	left join vokigames.seg_players_30975_pq using (event_user)
+where 
+	timestamp 'epoch' + day * interval '1 second' between '2021-04-27' and '2021-10-10'
+	and timestamp 'epoch' + (hour-86400) * interval '1 second' = '2021-10-10'
+group by 
+	1
+union all
+select 
+	(timestamp 'epoch' + day * interval '1 second')::date report_date,
+	'gp' as platform,
+	count (distinct event_user) as DAU,
+	count (distinct 
+	case
+	when timestamp 'epoch' + (first_session/1000)::float * interval '1 second' > '2021-04-26' then event_user
+	end
+	) as DAU_new
+from
+	vokigames.attempts_31756_pq
+	left join vokigames.seg_players_31756_pq using (event_user)
+where 
+	timestamp 'epoch' + day * interval '1 second' between '2021-04-27' and '2021-10-10'
+	and timestamp 'epoch' + (hour-86400) * interval '1 second' = '2021-10-10'
+group by 
+	1
+order by 
+	1
+	
+	
+select 
+	report_date,
+	sum(dau) dau,
+	sum(dau_new) dau_new
+from vokigames.dau_karl_bedroom
+group by 1
+order by 1
+
+
+select * from vokigames.valid_iap_30975_pq vip limit 10
+
+select 
+	
+	
+select * from vokigames.attempts_30975_pq limit 10
+
+select * from vokigames.seg_users_30975_pq limit 10
+
+select * from vokigames.seg_players_30975_pq limit 10

@@ -1,0 +1,3 @@
+select * from temp.cumul_payments_mm_as 
+where pay_count = 0 and recenc
+limit 200

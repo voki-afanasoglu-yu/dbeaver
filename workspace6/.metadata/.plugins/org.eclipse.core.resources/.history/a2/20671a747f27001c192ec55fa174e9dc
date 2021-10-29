@@ -1,0 +1,28 @@
+select
+    day,
+    event_user,
+    sum(offer_price * 0.7) rev
+from
+    main_day.valid_iap_{gp}_pq
+where
+    day between unix_timestamp('{d_start}') and unix_timestamp('{d_end}')
+group by
+    1,2
+    
+    
+    
+   WITH variables AS (
+SELECT 
+   '2021-05-06'::DATE AS d_start, 
+   '2021-05-06'::DATE AS d_end
+)
+select
+    day,
+    event_user,
+    sum(offer_price * 0.7) rev
+from
+    main_day.valid_iap_31756_pq
+where
+     timestamp 'epoch' + day * interval '1 second' between (SELECT d_start::text FROM tmp_variables) and unix_timestamp(SELECT d_end::text FROM tmp_variables)
+group by
+    1,2

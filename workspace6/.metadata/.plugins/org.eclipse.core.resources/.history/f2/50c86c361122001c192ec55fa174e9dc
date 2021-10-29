@@ -1,0 +1,37 @@
+select --*
+ event_time,
+  day,
+  event_user,
+  device_id,
+  json_extract_path_text(payload, 'Bonus')::int bonus,
+  json_extract_path_text(payload, 'TotalDays')::int TotalDays,
+  json_extract_path_text(payload, 'TotalBonuses')::int TotalBonuses,
+  
+from main_day.all_events_30975_pq
+where
+    event_type = 'event'
+    and timestamp 'epoch' + day * interval '1 second' between '2021-06-24' and '2021-09-24'
+    and parameters like '%"DailyBonus.%'
+    and payload like '%"Bonus":"9"%'
+ order by event_time
+ limit 10
+ 
+ 
+ event_time,
+  day,
+  event_user,
+  device_id,
+  json_extract_path_text(payload, 'Difficulty')::int Difficulty,
+  json_extract_path_text(payload, 'Rank')::int Difficulty,
+  json_extract_path_text(payload, 'Mode') "Mode",
+  json_extract_path_text(payload, 'Level')::int "Level",
+  json_extract_path_text(payload, 'PackId') "PackId",
+  json_extract_path_text(payload, 'AtScene')::int "AtScene",
+  json_extract_path_text(payload, 'LastQuestCompleted')::int "LastQuestCompleted",
+  json_extract_path_text(payload, 'Attempt')::int "Attempt",
+  json_extract_path_text(payload, 'EndLevel')::int "EndLevel"
+--  *
+  from main_day.all_events_30975_pq 
+  where event_type = 'event'
+  and timestamp 'epoch' + day * interval '1 second' between '2021-06-26' and '2021-09-26'
+  and parameters like '%"Purchase.Boosts"%'

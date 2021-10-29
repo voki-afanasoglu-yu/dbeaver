@@ -1,0 +1,10 @@
+select 
+	json_extract_path_text(parameters , 'item'),
+	* 
+from main_day.all_events_30975_pq 
+where event_type = 'purchase'
+--and parameters like '%misc.currency_given.coins.Racing%'
+-- and regexp_extract(parameters , '"item":"(\\\w+)"', 1) like '%"misc.boosters%'
+and timestamp 'epoch' + (day) * interval '1 second' between '2021-05-18' and '2021-05-19'
+and json_extract_path_text(parameters , 'item') like 
+limit 10

@@ -1,0 +1,5 @@
+select *
+from main_day.all_events_30975_pq
+where
+    event_type = 'event'
+ limit 10

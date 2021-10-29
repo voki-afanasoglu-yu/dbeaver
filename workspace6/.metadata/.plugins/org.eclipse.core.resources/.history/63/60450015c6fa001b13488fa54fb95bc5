@@ -1,0 +1,9 @@
+
+
+-- DAU MM
+
+select 
+	activity_date,
+	count(distinct event_user)
+from vokigames.mm_2020_05_2021_07 
+

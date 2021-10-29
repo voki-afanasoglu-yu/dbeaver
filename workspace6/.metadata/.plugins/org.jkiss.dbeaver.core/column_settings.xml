@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+	<item id="MetaData/postgres-redshift-jdbc"/>
+	<item id="NodeList/GenericTableColumn">
+		<column name="Название" visible="true" order="0" width="100"/>
+		<column name="#" visible="true" order="1" width="100"/>
+		<column name="Тип Данных" visible="true" order="2" width="100"/>
+		<column name="Длина" visible="true" order="3" width="100"/>
+		<column name="Масштаб" visible="true" order="4" width="100"/>
+		<column name="Not Null" visible="true" order="5" width="100"/>
+		<column name="Авто генерация" visible="true" order="6" width="100"/>
+		<column name="Auto увеличение" visible="true" order="7" width="108"/>
+		<column name="По умолчанию" visible="true" order="8" width="100"/>
+		<column name="Описание" visible="true" order="9" width="100"/>
+	</item>
+	<item id="NodeList/PostgreTable">
+		<column name="Название" visible="true" order="0" width="100"/>
+		<column name="ID объекта" visible="true" order="1" width="100"/>
+		<column name="Владелец" visible="true" order="2" width="100"/>
+		<column name="Табличное пространство" visible="true" order="3" width="153"/>
+		<column name="Примерное число строк" visible="true" order="4" width="150"/>
+		<column name="Секционирование" visible="true" order="5" width="115"/>
+		<column name="Секционирование по" visible="true" order="6" width="132"/>
+		<column name="Дополнительные опции" visible="true" order="7" width="148"/>
+		<column name="Комментарий" visible="true" order="8" width="100"/>
+	</item>
+	<item id="NodeList/PostgreTableColumn">
+		<column name="Название" visible="true" order="0" width="154"/>
+		<column name="#" visible="true" order="1" width="27"/>
+		<column name="Тип данных" visible="true" order="2" width="105"/>
+		<column name="Автоувеличение" visible="true" order="3" width="105"/>
+		<column name="Правило сортировки" visible="true" order="4" width="131"/>
+		<column name="Not Null" visible="true" order="5" width="59"/>
+		<column name="По умолчанию" visible="true" order="6" width="99"/>
+		<column name="Комментарий" visible="true" order="7" width="91"/>
+	</item>
+	<item id="NodeList/RedshiftExternalTable">
+		<column name="Название" visible="true" order="0" width="143"/>
+		<column name="Расположение" visible="true" order="1" width="408"/>
+		<column name="Формат ввода" visible="true" order="2" width="363"/>
+		<column name="Формат вывода" visible="true" order="3" width="373"/>
+		<column name="Табличное пространство" visible="true" order="4" width="153"/>
+		<column name="Примерное число строк" visible="true" order="5" width="150"/>
+		<column name="Секционирование" visible="true" order="6" width="115"/>
+		<column name="Секционирование по" visible="true" order="7" width="132"/>
+	</item>
+	<item id="NodeList/RedshiftExternalTableColumn">
+		<column name="Название" visible="true" order="0" width="89"/>
+		<column name="#" visible="true" order="1" width="27"/>
+		<column name="Тип данных" visible="true" order="2" width="78"/>
+		<column name="Автоувеличение" visible="true" order="3" width="105"/>
+		<column name="Правило сортировки" visible="true" order="4" width="131"/>
+		<column name="Not Null" visible="true" order="5" width="59"/>
+		<column name="По умолчанию" visible="true" order="6" width="99"/>
+		<column name="Комментарий" visible="true" order="7" width="91"/>
+	</item>
+	<item id="NodeList/RedshiftSchema/RedshiftExternalSchema">
+		<column name="Название" visible="true" order="0" width="124"/>
+		<column name="Внешние опции" visible="true" order="1" width="584"/>
+		<column name="Комментарий" visible="true" order="2" width="141"/>
+	</item>
+	<item id="NodeList/RedshiftTable">
+		<column name="Название" visible="true" order="0" width="366"/>
+		<column name="ID объекта" visible="true" order="1" width="72"/>
+		<column name="Владелец" visible="true" order="2" width="66"/>
+		<column name="Табличное пространство" visible="true" order="3" width="153"/>
+		<column name="Примерное число строк" visible="true" order="4" width="150"/>
+		<column name="Секционирование" visible="true" order="5" width="115"/>
+		<column name="Секционирование по" visible="true" order="6" width="132"/>
+		<column name="Дополнительные опции" visible="true" order="7" width="148"/>
+		<column name="Комментарий" visible="true" order="8" width="91"/>
+	</item>
+	<item id="NodeList/RedshiftTableColumn">
+		<column name="Название" visible="true" order="0" width="130"/>
+		<column name="#" visible="true" order="1" width="27"/>
+		<column name="Тип данных" visible="true" order="2" width="79"/>
+		<column name="Кодировка" visible="true" order="3" width="73"/>
+		<column name="Автоувеличение" visible="true" order="4" width="105"/>
+		<column name="Правило сортировки" visible="true" order="5" width="131"/>
+		<column name="Not Null" visible="true" order="6" width="59"/>
+		<column name="По умолчанию" visible="true" order="7" width="99"/>
+		<column name="Комментарий" visible="true" order="8" width="91"/>
+	</item>
+	<item id="NodeList/SQLiteTableColumn">
+		<column name="Название" visible="true" order="0" width="88"/>
+		<column name="#" visible="true" order="1" width="27"/>
+		<column name="Тип Данных" visible="true" order="2" width="80"/>
+		<column name="Длина" visible="true" order="3" width="49"/>
+		<column name="Not Null" visible="true" order="4" width="59"/>
+		<column name="Auto увеличение" visible="true" order="5" width="108"/>
+		<column name="По умолчанию" visible="true" order="6" width="99"/>
+		<column name="Описание" visible="true" order="7" width="69"/>
+	</item>
+	<item id="scriptSelectorViewer">
+		<column name="Script" visible="true" order="0" width="215"/>
+		<column name="Time" visible="true" order="1" width="133"/>
+		<column name="Info" visible="true" order="2" width="1600"/>
+	</item>
+</items>

@@ -1,0 +1,7 @@
+select 
+	timestamp 'epoch' + day * interval '1 second' event_time
+	distinct 
+	
+	
+	
+select * from vokigames.attempts_30975_pq limit 10

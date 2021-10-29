@@ -1,0 +1,15 @@
+select 
+	timestamp 'epoch' + day * interval '1 second' report_date,
+	distinct event_user as DAU
+from
+	vokigames.attempts_30975_pq
+where 
+	timestamp 'epoch' + day * interval '1 second' between 
+group by 
+	1
+order by 
+	1
+	
+	
+	
+select * from vokigames.attempts_30975_pq limit 10

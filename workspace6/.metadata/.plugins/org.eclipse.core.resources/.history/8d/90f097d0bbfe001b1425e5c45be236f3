@@ -1,0 +1,197 @@
+drop table vokigames.mm_cohorts_2021
+
+create table vokigames.mm_cohorts_2021 as
+
+
+alter table vokigames.mm_cohorts_2021 rename column  activity_day to activity_date
+
+
+		insert into vokigames.mm_cohorts_2021 
+		
+		
+		WITH tmp_variables AS (
+		SELECT 
+		   '2021-08-09'::DATE AS StartDate, 
+		   '2021-08-12'::DATE AS FinishDate
+		)
+		    select 
+		    	timestamp 'epoch' + day::float * interval '1 second' as day,
+		    	sum (rev) * .7,
+		    	sum (rev)
+		    	from
+			(
+			select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_30975_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+		)
+		group by 1
+		order by 1
+		
+		
+		select max from vokigames.mm_2020_05_2021_07 
+                 
+                 
+                 
+		drop table vokigames.test_mm_08 
+		
+		create table vokigames.test_mm_08 as
+ 		WITH tmp_variables AS (
+		SELECT 
+		   '2021-08-09'::DATE AS StartDate, 
+		   '2021-08-12'::DATE AS FinishDate
+		)
+              	select 
+      	timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' as activity_day,
+      	sp.hour,
+      	rev.day,
+      	sp.event_user,
+         timestamp 'epoch' + (sp.first_session /1000)::float * interval '1 second' as first_session_date,
+        sp.payer,
+        rev.rev,
+        rev.orders,
+        si.device_region,
+        si.install_type,
+        si.device_type,
+      	'ios' as platform
+      	from 
+      	(
+      	select 
+      	*
+      	from impala_main_day.seg_players_30975_pq sp
+      	where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+		and timestamp 'epoch' + (last_active/1000)::float * interval '1 second'  between 
+        timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' and timestamp 'epoch' + (sp.hour)::float * interval '1 second'
+        ) as sp
+      	left join (
+                select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_30975_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+        ) as rev on (rev.event_user = sp.event_user and rev.day = (sp.hour - 86400))
+        left join 
+        (
+        select
+        *
+        from impala_main_day.seg_install_info_30975_pq si 
+        where timestamp 'epoch' + (si.hour - 86400)::float * interval '1 second' between (SELECT FinishDate FROM tmp_variables) - interval '10 days' and (SELECT FinishDate FROM tmp_variables)
+        ) si on sp.event_user = si.event_user and sp.first_session/1000 = si.first_session 
+        union all
+                 select 
+      	timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' as activity_day,
+      	sp.hour,
+      	rev.day,
+      	sp.event_user,
+         timestamp 'epoch' + (sp.first_session /1000)::float * interval '1 second' as first_session_date,
+        sp.payer,
+        rev.rev,
+        rev.orders,
+        si.device_region,
+        si.install_type,
+        si.device_type,
+      	'gp' as platform
+      	from 
+      	(
+      	select 
+      	*
+      	from impala_main_day.seg_players_31756_pq sp
+      	where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+		and timestamp 'epoch' + (last_active/1000)::float * interval '1 second'  between 
+        timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' and timestamp 'epoch' + (sp.hour)::float * interval '1 second'
+        ) as sp
+      	left join (
+                select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_31756_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+        ) as rev on (rev.event_user = sp.event_user and rev.day = (sp.hour - 86400))
+        left join 
+        (
+        select
+        *
+        from impala_main_day.seg_install_info_31756_pq si 
+        where timestamp 'epoch' + (si.hour - 86400)::float * interval '1 second' between (SELECT FinishDate FROM tmp_variables) - interval '10 days' and (SELECT FinishDate FROM tmp_variables)
+        ) si on sp.event_user = si.event_user and sp.first_session/1000 = si.first_session 
+        union all 
+                  select 
+      	timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' as activity_day,
+      	sp.hour,
+      	rev.day,
+      	sp.event_user,
+         timestamp 'epoch' + (sp.first_session /1000)::float * interval '1 second' as first_session_date,
+        sp.payer,
+        rev.rev,
+        rev.orders,
+        si.device_region,
+        si.install_type,
+        si.device_type,
+      	'amz' as platform
+      	from 
+      	(
+      	select 
+      	*
+      	from impala_main_day.seg_players_31761_pq sp
+      	where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+		and timestamp 'epoch' + (last_active/1000)::float * interval '1 second'  between 
+        timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' and timestamp 'epoch' + (sp.hour)::float * interval '1 second'
+        ) as sp
+      	left join (
+                select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_31761_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+        ) as rev on (rev.event_user = sp.event_user and rev.day = (sp.hour - 86400))
+        left join 
+        (
+        select
+        *
+        from impala_main_day.seg_install_info_31761_pq si 
+        where timestamp 'epoch' + (si.hour - 86400)::float * interval '1 second' between (SELECT FinishDate FROM tmp_variables) - interval '10 days' and (SELECT FinishDate FROM tmp_variables)
+        ) si on sp.event_user = si.event_user and sp.first_session/1000 = si.first_session 
+        
+        
+        select
+        activity_day,
+        sum(rev)
+        from vokigames.test_mm_08
+        where activity_day >= '2021-08-01' --and platform = 'amz'
+        group by 1
+        order by 1
+        
+        
+        
+        
+        select --distinct device_region
+--        min(activity_day), 
+        max(activity_day)
+        from vokigames.mm_cohorts_2021
+        
+--        limit 10
+        
+        select * from impala_main_day.seg_players_31756_pq sp  
+        where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  = '2021-08-08'
+        limit 10
+        
+        select max(timestamp 'epoch' + (hour)::float * interval '1 second') from main_day.seg_install_info_31761_pq limit 10
+        
+        

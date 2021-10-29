@@ -1,0 +1,36 @@
+select 
+	distinct name
+from main_day.attempts_4698_pq
+where 
+	timestamp 'epoch' + day * interval '1 second' between '2021-09-13' and '2021-10-17'
+limit 10
+
+
+select 
+	(timestamp 'epoch' + day * interval '1 second')::date as report_period,
+	event_user,
+	count(name) as wins
+from main_day.attempts_4698_pq
+left join
+main_day.seg_users_{platform}_pq using event_user
+where 
+	timestamp 'epoch' + day * interval '1 second' between '2021-09-13' and '2021-10-17'
+	and name = 'Level.LevelComplete'
+	timestamp 'epoch' = hour-86400 = '2021-10-17'
+group by 1,2
+order by 1
+--limit 10
+
+
+
+    case
+ 		when sp.level < 50 then '0_early_game'
+        when su.payment_seg = 0 then '0_non_payers'
+        when su.payment_seg <= {low_payment} then '1_low_payers'
+        when su.payment_seg <= {normal_payment} then '2_normal_payers'
+        when su.payment_seg <= {good_payment} then '3_good_payers'
+        else '4_super_payers'
+    end pay_seg,
+from 
+    main_day.seg_users_{platform}_pq su
+    

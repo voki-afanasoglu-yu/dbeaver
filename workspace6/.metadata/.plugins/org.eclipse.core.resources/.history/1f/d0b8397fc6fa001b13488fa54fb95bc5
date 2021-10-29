@@ -1,0 +1,11 @@
+
+
+-- DAU MM
+
+select 
+	activity_date::date,
+	count(distinct event_user) as dau
+from vokigames.mm_2020_05_2021_07 
+group by 1
+order by 1
+

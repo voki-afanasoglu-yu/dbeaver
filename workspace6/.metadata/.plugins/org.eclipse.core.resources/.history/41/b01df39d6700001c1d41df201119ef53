@@ -1,0 +1,4 @@
+select 
+	*
+from vokigames.attempts_30975_pq 
+limit 10

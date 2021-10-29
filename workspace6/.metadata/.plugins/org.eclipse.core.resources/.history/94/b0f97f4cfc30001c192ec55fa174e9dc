@@ -1,0 +1,19 @@
+select 
+	distinct name
+from main_day.attempts_4698_pq
+where 
+	timestamp 'epoch' + day * interval '1 second' between '2021-09-13' and '2021-10-17'
+limit 10
+
+
+select 
+	(timestamp 'epoch' + day * interval '1 second')::date as report_period,
+	event_user,
+	count(name) as wins
+from main_day.attempts_4698_pq
+where 
+	timestamp 'epoch' + day * interval '1 second' between '2021-09-13' and '2021-10-17'
+	and name = 'Level.LevelComplete'
+group by 1,2
+order by 1
+limit 10

@@ -1,0 +1,6 @@
+--https://app.asana.com/0/347104365046376/1201168685574457/f
+
+select * from vokigames.all_events_31756_pq 
+where even
+parameters like '%userinfo%'
+limit 10

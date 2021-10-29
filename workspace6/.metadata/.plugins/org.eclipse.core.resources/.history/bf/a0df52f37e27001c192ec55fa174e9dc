@@ -1,0 +1,24 @@
+select
+    day,
+    event_user,
+    sum(offer_price * 0.7) rev
+from
+    main_day.valid_iap_{gp}_pq
+where
+    day between unix_timestamp('{d_start}') and unix_timestamp('{d_end}')
+group by
+    1,2
+    
+    
+    
+   WITH variables AS (
+SELECT 
+   '2021-05-06'::DATE AS StartDate, 
+   '2021-05-06'::DATE AS StartDate, 
+   'some string'      AS some_value,
+   5556::BIGINT       AS some_id
+)
+
+SELECT *
+FROM Orders
+WHERE OrderDate >= (SELECT StartDate FROM tmp_variables);

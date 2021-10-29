@@ -1,0 +1,9 @@
+select 
+	*
+from vokigames.attempts_30975_pq 
+limit 10
+
+
+select
+	*
+from vokigames.main_day.all_events_30975_pq 

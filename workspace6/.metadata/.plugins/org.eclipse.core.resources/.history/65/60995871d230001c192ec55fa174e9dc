@@ -1,0 +1,7 @@
+select 
+	*
+from main_day.attempts_4698_pq
+limit 10
+
+
+select 

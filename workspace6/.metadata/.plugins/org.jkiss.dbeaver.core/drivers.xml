@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<drivers>
+	<provider id="wmi"/>
+	<provider id="athena"/>
+	<provider id="clickhouse"/>
+	<provider id="datavirtuality"/>
+	<provider id="db2"/>
+	<provider id="db2_zos"/>
+	<provider id="db2_i"/>
+	<provider id="elasticsearch"/>
+	<provider id="exasol"/>
+	<provider id="jaybird"/>
+	<provider id="generic">
+		<driver id="sqlite_jdbc" categories="sql,embedded" name="SQLite" class="org.sqlite.JDBC" url="jdbc:sqlite:{file}" description="SQLite JDBC driver" custom="false" embedded="true" anonymous="true">
+			<library type="jar" path="maven:/org.xerial:sqlite-jdbc:RELEASE" custom="false">
+				<file id="org.xerial:sqlite-jdbc" version="3.36.0.1" path="${home}\AppData\Roaming\DBeaverData\drivers\maven\maven-central\org.xerial\sqlite-jdbc-3.36.0.1.jar"/>
+			</library>
+		</driver>
+		<driver id="cloudera_impala" category="Hadoop" categories="hadoop" name="Cloudera Impala" class="com.cloudera.impala.jdbc.Driver" url="jdbc:impala://{host}:{port}/{database}" port="21050" description="Cloudera Impala. You can download JDBC driver files from https://www.cloudera.com/" custom="false" instantiable="false">
+			<library type="jar" path="C:\Distrib\ClouderaImpalaJDBC-2.6.15.1017\ImpalaJDBC42.jar" custom="true"/>
+			<parameter name="read-only-data" value="false"/>
+			<parameter name="supports-indexes" value="true"/>
+			<parameter name="all-objects-pattern" value="%"/>
+			<parameter name="quote-reserved-words" value="true"/>
+			<parameter name="omit-schema" value="false"/>
+			<parameter name="supports-table-constraints" value="true"/>
+			<parameter name="schema-filters-enabled" value="false"/>
+			<parameter name="script-delimiter-redefiner" value=";"/>
+			<parameter name="supports-struct-cache" value="true"/>
+			<parameter name="supports-truncate" value="true"/>
+			<parameter name="omit-type-cache" value="false"/>
+			<parameter name="split-procedures-and-functions" value="false"/>
+			<parameter name="supports-stored-code" value="true"/>
+			<parameter name="omit-catalog-name" value="false"/>
+			<parameter name="omit-single-catalog" value="false"/>
+			<parameter name="ddl-drop-column-brackets" value="false"/>
+			<parameter name="omit-single-schema" value="false"/>
+			<parameter name="supports-scroll" value="false"/>
+			<parameter name="supports-views" value="true"/>
+			<parameter name="script-delimiter" value=";"/>
+			<parameter name="legacy-sql-dialect" value="false"/>
+			<parameter name="script-delimiter-after-query" value="false"/>
+			<parameter name="use-search-string-escape" value="false"/>
+			<parameter name="supports-multiple-results" value="false"/>
+			<parameter name="script-delimiter-after-block" value="false"/>
+			<parameter name="supports-set-array" value="false"/>
+			<parameter name="alter-table-add-column" value="false"/>
+			<parameter name="ddl-drop-column-short" value="false"/>
+			<parameter name="supports-limits" value="true"/>
+			<parameter name="supports-select-count" value="true"/>
+		</driver>
+	</provider>
+	<provider id="bigquery"/>
+	<provider id="google_spanner"/>
+	<provider id="greenplum"/>
+	<provider id="h2gis"/>
+	<provider id="hana"/>
+	<provider id="hive"/>
+	<provider id="kognitio"/>
+	<provider id="sqlserver"/>
+	<provider id="mssql"/>
+	<provider id="mysql"/>
+	<provider id="ocient"/>
+	<provider id="open-distro-elasticsearch"/>
+	<provider id="oracle"/>
+	<provider id="postgresql">
+		<driver id="postgres-redshift-jdbc" category="AWS" categories="sql,analytic,bigdata,aws" name="Redshift" class="com.amazon.redshift.jdbc42.Driver" url="jdbc:redshift://{host}:{port}/{database}" port="5439" defaultDatabase="dev" defaultUser="awsuser" description="AWS Redshift JDBC driver" custom="false">
+			<library type="jar" path="https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/1.2.45.1069/RedshiftJDBC42-no-awssdk-1.2.45.1069.jar" custom="false">
+				<file id="https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/1.2.45.1069/RedshiftJDBC42-no-awssdk-1.2.45.1069.jar" path="${home}\AppData\Roaming\DBeaverData\drivers\remote\redshift-downloads\drivers\jdbc\1.2.45.1069\RedshiftJDBC42-no-awssdk-1.2.45.1069.jar"/>
+			</library>
+			<library type="jar" path="${home}\Downloads\rs_drivers" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\aws-java-sdk-core-1.11.118.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\aws-java-sdk-redshift-1.11.118.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\aws-java-sdk-sts-1.11.118.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\commons-codec-1.9.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\commons-logging-1.2.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\httpclient-4.5.2.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\httpcore-4.4.4.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\jackson-annotations-2.6.0.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\jackson-core-2.6.6.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\jackson-databind-2.6.6.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\jackson-dataformat-cbor-2.6.6.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\joda-time-2.8.1.jar" custom="true"/>
+			<library type="jar" path="${home}\Downloads\rs_drivers\redshift-jdbc42-2.0.0.4.jar" custom="true"/>
+		</driver>
+	</provider>
+	<provider id="snowflake"/>
+	<provider id="vertica"/>
+</drivers>

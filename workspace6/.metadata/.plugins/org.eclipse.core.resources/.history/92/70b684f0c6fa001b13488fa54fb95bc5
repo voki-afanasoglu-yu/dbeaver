@@ -1,0 +1,17 @@
+
+
+-- DAU MM
+
+with dau as
+(
+select 
+	activity_date::date,
+	count(distinct event_user) as dau
+from vokigames.mm_2020_05_2021_07 
+group by 1
+order by 1
+)
+select 
+	*,
+	avg(dau) over (partition by activity_date order by activity_date rows between 90 preceding and current row)
+	from dau

@@ -1,0 +1,27 @@
+
+
+-- DAU MM
+
+with dau as
+(
+select 
+	activity_date::date,
+	count(distinct event_user) as dau
+from vokigames.mm_2020_05_2021_07 
+group by 1
+union all 
+
+)
+select 
+	*,
+	avg(dau) over (order by activity_date rows 89 preceding) as avg_90
+from dau
+order by 1
+
+
+select 
+	activity_date::date,
+	platform,
+	count( case when platform = ios (distinct event_user) as dau
+from vokigames.mm_2020_05_2021_07 
+group by 1,2

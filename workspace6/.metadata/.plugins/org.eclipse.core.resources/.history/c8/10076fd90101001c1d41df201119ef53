@@ -1,0 +1,93 @@
+select 
+	*
+from vokigames.attempts_30975_pq 
+limit 10
+
+
+select
+	*
+from vokigames.all_events_30975_pq
+limit 10
+
+select 
+    payload,
+    event_time,
+    event_user
+from 
+    main_day.all_events_30975_pq
+where 
+    timestamp 'epoch' + (day)::float * interval '1 second' between '2021-07-01' and '2021-07-31'
+    and event_type = 'event'
+    and parameters like '%ISPY.UsePause%'
+    
+    
+    select 
+--	payload,
+    event_time,
+    event_user,
+    json_extract_path_text(payload , 'Payers') as Payers,
+    json_extract_path_text(payload , 'MakeScreenshot') as MakeScreenshot,
+    json_extract_path_text(payload , 'Difficulty') as Difficulty,
+    json_extract_path_text(payload , 'Mode') as Mode,
+    json_extract_path_text(payload , 'Chapter') as Chapter,
+    json_extract_path_text(payload , 'PauseCount') as PauseCount,
+    json_extract_path_text(payload , 'Name') as Name,
+    json_extract_path_text(payload , 'Attempt') as Attempt,
+    json_extract_path_text(payload , 'Level') as Level,
+    json_extract_path_text(payload , 'TimeLeftPause') as TimeLeftPause     
+--     JSON_PARSE(payload)
+from 
+    main_day.all_events_30975_pq
+where 
+    timestamp 'epoch' + (day)::float * interval '1 second' between '2021-07-01' and '2021-07-31'
+    and event_type = 'event'
+    and (json_extract_path_text(parameters, 'name') = 'ISPY.UsePause'
+    limit 10
+    
+    
+    
+    select count(*)
+from 
+    main_day.all_events_30975_pq
+where 
+    timestamp 'epoch' + (day)::float * interval '1 second' between '2021-05-01' and '2021-07-31'
+    and event_type = 'event'
+    and json_extract_path_text(parameters, 'name') = 'ISPY.UsePause'
+    and json_extract_path_text(payload , 'MakeScreenshot')::int > 0
+    
+    with source as
+    (
+    select
+--    event_time,
+    event_user,
+    json_extract_path_text(payload , 'Payers') as Payers,
+    json_extract_path_text(payload , 'MakeScreenshot') as MakeScreenshot,
+--    json_extract_path_text(payload , 'Difficulty') as Difficulty,
+--    json_extract_path_text(payload , 'Mode') as Mode,
+--    json_extract_path_text(payload , 'Chapter') as Chapter,
+--    json_extract_path_text(payload , 'PauseCount') as PauseCount,
+--    json_extract_path_text(payload , 'Name') as Name,
+--    json_extract_path_text(payload , 'Attempt') as Attempt,
+--    json_extract_path_text(payload , 'Level') as Level,
+--    json_extract_path_text(payload , 'TimeLeftPause') as TimeLeftPause,
+--    json_extract_path_text(parameters, 'name') as event_name
+from 
+    main_day.all_events_30975_pq
+where 
+    timestamp 'epoch' + (day)::float * interval '1 second' between '2021-07-31' and '2021-07-31'
+    and event_type = 'event'
+    and json_extract_path_text(parameters, 'name') = 'ISPY.UsePause'
+--    and json_extract_path_text(payload , 'MakeScreenshot')::int > 0
+    )
+    select 
+            PayerType,
+        count(distinct event_user) as all_users,
+        count(distinct
+            case
+            when MakeScreenshot > 0 then event_user
+            end
+            ) as screenshoter
+    from source
+    group by 1
+    	
+    

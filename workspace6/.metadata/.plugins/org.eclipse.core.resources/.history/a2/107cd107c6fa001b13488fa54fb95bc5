@@ -1,0 +1,8 @@
+
+
+-- DAU MM
+
+select 
+	activity_date,
+	count()
+

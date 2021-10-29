@@ -1,0 +1,61 @@
+--https://app.asana.com/0/347104365046376/1199942794131742/f
+
+select
+    day,
+    event_user,
+    sum(offer_price * 0.7) rev
+from
+    main_day.valid_iap_{gp}_pq
+where
+    day between unix_timestamp('{d_start}') and unix_timestamp('{d_end}')
+group by
+    1,2
+    
+    
+    
+   WITH variables AS (
+SELECT 
+   '2021-05-06'::DATE AS d_start, 
+   '2021-05-19'::DATE AS d_end
+)
+select 
+--	day,
+	sum(rev) rev
+from
+(
+select
+    timestamp 'epoch' + day * interval '1 second' as day,
+--    event_user,
+    sum(offer_price * 0.7) rev
+from
+    main_day.valid_iap_30975_pq
+where
+     timestamp 'epoch' + day * interval '1 second' between (SELECT d_start FROM variables) and (SELECT d_end FROM variables)
+group by
+    1--,2
+union all
+select
+    timestamp 'epoch' + day * interval '1 second' as day,
+--    event_user,
+    sum(offer_price * 0.7) rev
+from
+    main_day.valid_iap_31756_pq
+where
+     timestamp 'epoch' + day * interval '1 second' between (SELECT d_start FROM variables) and (SELECT d_end FROM variables)
+group by
+    1--,2
+)
+--group by 1
+--order by 1 
+
+select *
+from
+    main_day.valid_iap_30975_pq
+    limit 10
+    
+ -- игроки в конце контента
+ 
+    
+    
+ 
+    

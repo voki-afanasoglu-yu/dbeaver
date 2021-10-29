@@ -1,0 +1,241 @@
+drop table vokigames.mm_cohorts_2021
+
+create table vokigames.mm_cohorts_2021 as
+
+
+alter table vokigames.mm_cohorts_2021 rename column  activity_day to activity_date
+
+
+		insert into vokigames.mm_cohorts_2021 
+		
+		
+		WITH tmp_variables AS (
+		SELECT 
+		   '2021-08-04'::DATE AS StartDate, 
+		   '2021-08-12'::DATE AS FinishDate
+		)
+		    select 
+		    	timestamp 'epoch' + day::float * interval '1 second' as day,
+		    	sum (rev) * .7,
+		    	sum (rev)
+		    	from
+			(
+			select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_30975_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+		)
+		group by 1
+		order by 1
+		
+		
+		select max(activity_date) from vokigames.mm_2020_05_2021_07 
+                 
+                 
+                 
+		drop table vokigames.test_mm_08 
+		
+		create table vokigames.test_mm_08 as
+		
+		insert into vokigames.mm_2020_05_2021_07 
+ 		WITH tmp_variables AS (
+		SELECT 
+		   '2021-08-04'::DATE AS StartDate, 
+		   '2021-08-12'::DATE AS FinishDate
+		)
+              	select 
+      	timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' as activity_day,
+      	sp.hour,
+      	rev.day,
+      	sp.event_user,
+         timestamp 'epoch' + (sp.first_session /1000)::float * interval '1 second' as first_session_date,
+        sp.payer,
+        rev.rev,
+        rev.orders,
+        si.device_region,
+        si.install_type,
+        si.device_type,
+      	'ios' as platform
+      	from 
+      	(
+      	select 
+      	*
+      	from impala_main_day.seg_players_30975_pq sp
+      	where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+		and timestamp 'epoch' + (last_active/1000)::float * interval '1 second'  between 
+        timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' and timestamp 'epoch' + (sp.hour)::float * interval '1 second'
+        ) as sp
+      	left join (
+                select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_30975_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+        ) as rev on (rev.event_user = sp.event_user and rev.day = (sp.hour - 86400))
+        left join 
+        (
+        select
+        *
+        from impala_main_day.seg_install_info_30975_pq si 
+        where timestamp 'epoch' + (si.hour - 86400)::float * interval '1 second' = (SELECT FinishDate FROM tmp_variables)
+        ) si on sp.event_user = si.event_user and sp.first_session/1000 = si.first_session 
+        union all
+                 select 
+      	timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' as activity_day,
+      	sp.hour,
+      	rev.day,
+      	sp.event_user,
+         timestamp 'epoch' + (sp.first_session /1000)::float * interval '1 second' as first_session_date,
+        sp.payer,
+        rev.rev,
+        rev.orders,
+        si.device_region,
+        si.install_type,
+        si.device_type,
+      	'gp' as platform
+      	from 
+      	(
+      	select 
+      	*
+      	from impala_main_day.seg_players_31756_pq sp
+      	where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+		and timestamp 'epoch' + (last_active/1000)::float * interval '1 second'  between 
+        timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' and timestamp 'epoch' + (sp.hour)::float * interval '1 second'
+        ) as sp
+      	left join (
+                select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_31756_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+        ) as rev on (rev.event_user = sp.event_user and rev.day = (sp.hour - 86400))
+        left join 
+        (
+        select
+        *
+        from impala_main_day.seg_install_info_31756_pq si 
+        where timestamp 'epoch' + (si.hour - 86400)::float * interval '1 second' = (SELECT FinishDate FROM tmp_variables)
+        ) si on sp.event_user = si.event_user and sp.first_session/1000 = si.first_session 
+        union all 
+                  select 
+      	timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' as activity_day,
+      	sp.hour,
+      	rev.day,
+      	sp.event_user,
+         timestamp 'epoch' + (sp.first_session /1000)::float * interval '1 second' as first_session_date,
+        sp.payer,
+        rev.rev,
+        rev.orders,
+        si.device_region,
+        si.install_type,
+        si.device_type,
+      	'amz' as platform
+      	from 
+      	(
+      	select 
+      	*
+      	from impala_main_day.seg_players_31761_pq sp
+      	where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+		and timestamp 'epoch' + (last_active/1000)::float * interval '1 second'  between 
+        timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second' and timestamp 'epoch' + (sp.hour)::float * interval '1 second'
+        ) as sp
+      	left join (
+                select
+                  event_user,
+                  day, -- timestamp 'epoch' + day::float * interval '1 second' as 
+                  sum(offer_price) as rev,
+                  count(offer_price) as orders
+                 from impala_main_day.valid_iap_31761_pq vi 
+                 where 
+                  timestamp 'epoch' + day::float * interval '1 second'  between (SELECT StartDate FROM tmp_variables) and (SELECT FinishDate FROM tmp_variables)
+                 group by 1,2
+        ) as rev on (rev.event_user = sp.event_user and rev.day = (sp.hour - 86400))
+        left join 
+        (
+        select
+        *
+        from impala_main_day.seg_install_info_31761_pq si 
+        where timestamp 'epoch' + (si.hour - 86400)::float * interval '1 second' = (SELECT FinishDate FROM tmp_variables)
+        ) si on sp.event_user = si.event_user and sp.first_session/1000 = si.first_session 
+        
+        
+        select --*
+        max(activity_date), min(activity_date)
+        from vokigames.mm_2020_05_2021_07 --where activity_date >= '2021-08-05'
+--        limit 10
+        
+        
+        select max(timestamp 'epoch' + (hour - 86400)::float * interval '1 second') from vokigames.seg_install_info_30975_pq limit 10
+        
+        
+        
+        select
+        activity_date,
+        sum(rev)*.7
+        from vokigames.mm_2020_05_2021_07 
+        where activity_date >= '2021-08-01' --and platform = 'amz'
+        group by 1
+        order by 1
+        
+        
+        
+        mode	attempts	attempts_with_screens	players	wins	wins_without_screens	attempts_screen	players_screen	wins_screen	Äמכÿ ןמבוה בוח סךנטםמג	Äמכÿ ןמבוה סמ סךנטםאלט	המכÿ ןמכüחמגאעוכוי טסןמכüחף‏שטץ ןאףחû ט סךנטםû	% ןמןûעמך סמ סךנטםמל ט ןאףחמי
+Default	339 111 008	9 283 897	3 403 846	177 969 394	169 482 416	6 978 326	207 819	6 413 356	51,03%	91,90%	6,11%	2,1%
+Silhouette	82 809 972	1 756 047	2 218 170	26 967 865	25 440 034	1 329 327	142 921	1 163 648	31,22%	87,54%	6,44%	1,6%
+Pairs	93 947 957	1 985 484	2 184 453	27 888 272	26 158 072	1 507 112	155 346	1 322 691	28,30%	87,76%	7,11%	1,6%
+OneWord	43 724 672	1 234 588	1 737 987	23 234 907	22 124 940	935 608	119 664	843 312	51,71%	90,14%	6,89%	2,1%
+Differences	108 401 654	1 898 500	1 649 623	28 175 967	26 684 165	1 406 542	125 739	1 107 347	24,94%	78,73%	7,62%	1,3%
+StepByStep	44 287 233	1 091 803	1 300 314	17 647 234	16 634 163	805 359	107 176	753 794	38,26%	93,60%	8,24%	1,8%
+Anagram	49 291 439	1 412 342	1 159 934	17 204 807	15 965 684	1 065 702	118 855	944 406	33,11%	88,62%	10,25%	2,2%
+Collectioner	21 081 757	463 614	1 044 678	16 876 931	16 430 209	332 687	66 832	321 085	79,19%	96,51%	6,40%	1,6%
+Clouds	58 907 621	1 715 814	962 958	17 395 480	15 986 071	1 226 316	102 669	1 025 677	27,71%	83,64%	10,66%	2,1%
+StepSilhouette	16 039 209	610 877	762 546	10 250 364	9 663 068	442 976	65 758	427 048	61,96%	96,40%	8,62%	2,8%
+Inverted	37 081 090	1 048 578	602 438	11 864 813	10 928 897	804 032	72 653	721 965	30,13%	89,79%	12,06%	2,2%
+AnagramPairs	22 080 465	768 007	426 855	7 690 228	6 986 587	593 447	55 131	546 679	32,52%	92,12%	12,92%	2,7%
+CloudsSilhouette	20 706 025	757 305	292 281	6 035 814	5 418 207	563 756	39 712	466 305	26,90%	82,71%	13,59%	2,7%
+ItemSet	3 688 121	102 230	190 972	3 493 708	3 393 893	78 333	17 199	76 425	94,02%	97,56%	9,01%	2,1%
+OneAnagram	3 200 325	181 436	128 695	2 420 444	2 249 329	142 394	18 058	134 477	73,56%	94,44%	14,03%	4,4%
+Fog	4 247 018	236 166	87 420	2 227 034	2 022 221	170 085	12 819	148 254	49,60%	87,16%	14,66%	4,0%
+Feathers	2 631 051	165 483	53 832	907 873	755 221	87 498	8 276	81 245	29,69%	92,85%	15,37%	3,3%
+OneSilhouette	1 089 850	65 171	42 804	850 220	789 626	51 417	6 705	47 790	76,04%	92,95%	15,66%	4,7%
+Snow	1 794 385	43 138	40 019	648 197	608 330	76 140	7 262	70 823	35,40%	93,02%	18,15%	4,2%
+CloudsPairs	1 891 068	108 058	29 638	640 055	545 500	80 769	5 697	71 693	30,13%	88,76%	19,22%	4,3%
+HidingLetters	822 878	55 815	21 129	561 943	508 585	40 814	3 873	39 137	65,03%	95,89%	18,33%	5,0%
+FeathersSilhouette	237 054	23 473	13 688	211 291	188 371	12 207	1 995	11 928	83,78%	97,71%	14,57%	5,1%
+Decoloration	395 081	25 775	10 595	260 426	235 665	18 974	2 068	18 188	62,66%	95,86%	19,52%	4,8%
+SnowSilhouette	133 859	5 000	8 587	123 093	118 205	8 498	1 451	8 338	94,29%	98,12%	16,90%	6,3%
+HidingPairs	206 864	19 559	7 374	166 918	147 862	13 491	1 444	13 178	76,46%	97,68%	19,58%	6,5%
+FogSilhouette	133 719	13 215	4 927	72 889	61 652	6 949	861	5 981	48,63%	86,07%	17,48%	5,2%
+CloudsOne	41 653	5 441	3 329	34 377	29 195	2 856	522	2 736	75,25%	95,80%	15,68%	6,9%
+FeathersPairs	5 014	367	1 017	2 775	2 438	215	119	197	50,80%	91,63%	11,70%	4,3%
+        
+        
+        
+        
+        select --distinct device_region
+--        min(activity_day), 
+        max(activity_day)
+        from vokigames.mm_cohorts_2021
+        
+--        limit 10
+        
+        select * from impala_main_day.seg_players_31756_pq sp  
+        where timestamp 'epoch' + (sp.hour - 86400)::float * interval '1 second'  = '2021-08-08'
+        limit 10
+        
+        select max(timestamp 'epoch' + (hour)::float * interval '1 second') from main_day.seg_install_info_31761_pq limit 10
+        
+        
